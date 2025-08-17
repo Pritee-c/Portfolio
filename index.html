@@ -76,6 +76,91 @@
       color: #FFD580; /* highlight */
     }
 
+    .right-section {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .left-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    /* Side Navigation */
+    .side-nav {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100vh;
+      background: #8B5E3C;
+      transition: left 0.3s ease;
+      z-index: 2000;
+      padding-top: 60px;
+    }
+
+    .side-nav.active {
+      left: 0;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 35px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .close-btn:hover {
+      color: #FFD580;
+    }
+
+    .side-nav-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .side-nav-content ul li {
+      padding: 15px 25px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .side-nav-content ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .side-nav-content ul li a:hover {
+      color: #FFD580;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 1500;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
     /* Sections */
     section {
       padding: 50px 20px;
@@ -221,6 +306,278 @@
       50% { transform: translateY(50vh) translateX(50px) rotate(180deg); }
       100% { transform: translateY(-100vh) translateX(-50px) rotate(360deg); }
     }
+
+    /* Resume Button */
+    .resume-btn {
+      background: #FFD580;
+      color: #634228;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(255, 213, 128, 0.3);
+    }
+
+    .resume-btn:hover {
+      background: #F5F5DC;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 213, 128, 0.4);
+    }
+
+    /* Scroll Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide-in-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .slide-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .slide-in-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .slide-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Typing Animation */
+    .typing-animation {
+      overflow: hidden;
+      border-right: 3px solid #FFD580;
+      white-space: nowrap;
+      animation: typing 3s steps(15, end), blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: #FFD580; }
+    }
+
+    /* RESPONSIVENESS */
+
+/* Tablets and below */
+@media (max-width: 1024px) {
+  header {
+    padding: 15px 20px;
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .header-nav ul {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .name h1 {
+    font-size: 1.6em;
+  }
+
+  .contact {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr; /* stack projects */
+  }
+
+  section {
+    padding: 40px 15px;
+  }
+
+  h2 {
+    font-size: 1.6em;
+  }
+
+  .skills-grid {
+    justify-content: flex-start;
+  }
+
+  .skill {
+    flex: 1 1 45%; /* two per row */
+    justify-content: flex-start;
+  }
+}
+
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background: white;
+  margin: 4px;
+  transition: 0.3s;
+}
+ .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .logo h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 8px;
+      align-items: center;
+    }
+
+    .social-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: #FFD580;
+    }
+
+    .social-links img {
+      width: 20px;
+      height: 20px;
+    }
+
+/* Mobile nav */
+@media (max-width: 768px) {
+  .header-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .left-section {
+    gap: 10px;
+  }
+}
+
+/* Footer */
+    .footer {
+      background: linear-gradient(135deg, #634228, #8B5E3C);
+      color: white;
+      padding: 50px 20px 20px;
+      margin-top: 50px;
+    }
+
+    .footer-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+    }
+
+    .footer-section h3 {
+      color: #FFD580;
+      margin-bottom: 15px;
+      font-size: 1.5em;
+    }
+
+    .footer-section h4 {
+      color: #FFD580;
+      margin-bottom: 15px;
+      font-size: 1.2em;
+    }
+
+    .footer-section p {
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer-section ul li a {
+      color: #F5F5DC;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-section ul li a:hover {
+      color: #FFD580;
+    }
+
+    .footer-social {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-social a {
+      color: #F5F5DC;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-social a:hover {
+      color: #FFD580;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-bottom p {
+      margin: 0;
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+
   </style>
 </head>
 <body>
@@ -231,31 +588,61 @@
   <!-- Header -->
   <header>
     <div class="header-container">
-      <div class="name">
-        <h1>Pritee Chaugule</h1>
-        <div class="contact">
-          <a href="mailto:priteechaugule@gmail.com">📧 priteechaugule@gmail.com</a>
-          <a href="https://github.com/Pritee-c" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub"> GitHub
-          </a>
-          <a href="https://www.linkedin.com/in/pritee-chaugule-3a0a4a166" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn"> LinkedIn
-          </a>
+      <div class="left-section">
+        <!-- Hamburger -->
+        <div class="hamburger" onclick="toggleMenu()">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        
+        <div class="name">
+          <h1 id="typing-name">Pritee Chaugule</h1>
+          <div class="social-links">
+            <a href="mailto:priteechaugule@gmail.com">📧 priteechaugule@gmail.com</a>
+            <a href="https://www.linkedin.com/in/pritee-chaugule-3a0a4a166" target="_blank">
+              <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn"> LinkedIn
+            </a>
+            <a href="https://github.com/Pritee-c" target="_blank">
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub"> GitHub
+            </a>
+          </div>
         </div>
       </div>
-      <nav class="header-nav">
-        <ul>
-          <li><a href="#about">About Me</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#experience">Experience</a></li>
-        </ul>
-      </nav>
+
+      <div class="right-section">
+        <a href="#" class="resume-btn" onclick="downloadResume()">📄 Download Resume</a>
+        <nav class="header-nav" id="navMenu">
+          <ul>
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </header>
 
+  <!-- Side Navigation Menu -->
+  <div class="side-nav" id="sideNav">
+    <div class="close-btn" onclick="toggleMenu()">&times;</div>
+    <nav class="side-nav-content">
+      <ul>
+        <li><a href="#about" onclick="toggleMenu()">About Me</a></li>
+        <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
+        <li><a href="#skills" onclick="toggleMenu()">Skills</a></li>
+        <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+
   <!-- About Me -->
-  <section id="about">
+  <section id="about" class="fade-in">
   <h2>About Me</h2>
   <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:30px; max-width:1000px; margin:auto;">
     <!-- About Text -->
@@ -267,13 +654,16 @@
 <div style="flex:1; min-width:280px; text-align:center;">
   <img src="tech-girl.png" 
        alt="Tech Girl Animation" 
-       style="max-width:250px; border-radius:15px; box-shadow:0 6px 18px rgba(0,0,0,0.1);">
+       style="max-width:250px; border-radius:15px; box-shadow:0 6px 18px rgba(0,0,0,0.1); 
+              background: transparent; 
+              mix-blend-mode: multiply;
+              filter: brightness(1.1) contrast(1.1);">
 </div>
   </div>
   </section>
 
   <!-- Projects -->
-  <section id="projects">
+  <section id="projects" class="fade-in">
     <h2>Projects</h2>
     <div class="project-grid">
       <div class="project-card">
@@ -320,7 +710,7 @@
   </section>
 
   <!-- Skills -->
-  <section id="skills">
+  <section id="skills" class="fade-in">
     <h2>Skills</h2>
     <div class="skills-grid">
       <!-- DevOps & Tools -->
@@ -352,7 +742,7 @@
   </section>
 
   <!-- Current Experience -->
-  <section id="experience">
+  <section id="experience" class="fade-in">
     <h2>Current Experience</h2>
     <div class="experience-card">
       <h3>Database Administrator (DBA)</h3>
@@ -369,5 +759,109 @@
     </div>
   </section>
 
+  <!-- Footer -->
+  <footer class="footer fade-in">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Pritee Chaugule</h3>
+        <p>Database Administrator & DevOps Enthusiast</p>
+        <p>Turning complex systems into smooth, automated workflows</p>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#experience">Experience</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Connect With Me</h4>
+        <div class="footer-social">
+          <a href="mailto:priteechaugule@gmail.com">📧 Email</a>
+          <a href="https://www.linkedin.com/in/pritee-chaugule-3a0a4a166" target="_blank">💼 LinkedIn</a>
+          <a href="https://github.com/Pritee-c" target="_blank">💻 GitHub</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Pritee Chaugule. All rights reserved. | Built with passion for automation and innovation</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const sideNav = document.getElementById("sideNav");
+      const overlay = document.getElementById("overlay");
+      
+      sideNav.classList.toggle("active");
+      overlay.classList.toggle("active");
+    }
+
+    function downloadResume() {
+
+      const resumeUrl = 'PRITEE_CHAUGULE_RESUME.pdf'; 
+      
+      // Create a temporary link element and trigger download
+      const link = document.createElement('a');
+      link.href = resumeUrl;
+      link.download = 'Pritee_Chaugule_Resume.pdf'; // This will be the downloaded filename
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Scroll Animation Observer
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all elements with animation classes
+    document.addEventListener('DOMContentLoaded', () => {
+      const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+      animatedElements.forEach(el => observer.observe(el));
+      
+      // Start typing animation for name
+      startTypingAnimation();
+    });
+
+    // Typing Animation Function
+    function startTypingAnimation() {
+      const nameElement = document.getElementById('typing-name');
+      const text = 'Pritee Chaugule';
+      nameElement.innerHTML = '';
+      nameElement.classList.add('typing-animation');
+      
+      let i = 0;
+      function typeWriter() {
+        if (i < text.length) {
+          nameElement.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typeWriter, 150);
+        } else {
+          // Remove cursor after typing is complete
+          setTimeout(() => {
+            nameElement.classList.remove('typing-animation');
+          }, 1000);
+        }
+      }
+      
+      // Start typing after a small delay
+      setTimeout(typeWriter, 500);
+    }
+  </script>
 </body>
 </html>
