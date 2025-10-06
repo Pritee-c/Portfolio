@@ -636,6 +636,294 @@
       opacity: 0.8;
     }
 
+    /* Chatbot Styles */
+    #chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 3000;
+    }
+
+    #chat-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #8B5E3C, #634228);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(139, 94, 60, 0.3);
+      transition: all 0.3s ease;
+      animation: chatPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes chatPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    #chat-icon:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(139, 94, 60, 0.4);
+    }
+
+    #chatbot {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 340px;
+      height: 450px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      border: 2px solid #FFD580;
+    }
+
+    .chatbot-hidden {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(0.9);
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, #8B5E3C, #634228);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 13px 13px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    #close-chat {
+      font-size: 24px;
+      cursor: pointer;
+      padding: 0 5px;
+      transition: color 0.3s;
+    }
+
+    #close-chat:hover {
+      color: #FFD580;
+    }
+
+    #chat-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background: #fdf6f0;
+      scrollbar-width: thin;
+      scrollbar-color: #8B5E3C #f1f1f1;
+    }
+
+    #chat-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #chat-messages::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    #chat-messages::-webkit-scrollbar-thumb {
+      background: #8B5E3C;
+      border-radius: 10px;
+    }
+
+    .message {
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      max-width: 85%;
+      font-size: 0.9em;
+      line-height: 1.4;
+      animation: messageSlide 0.3s ease-out;
+    }
+
+    @keyframes messageSlide {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .user-message {
+      background: linear-gradient(135deg, #FFD580, #F5F5DC);
+      margin-left: auto;
+      text-align: right;
+      color: #634228;
+      font-weight: 500;
+    }
+
+    .bot-message {
+      background: white;
+      border: 1px solid #E8E8E8;
+      color: #333;
+      position: relative;
+    }
+
+    .bot-message::before {
+      content: '';
+      position: absolute;
+      left: -30px;
+      top: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #8B5E3C, #634228);
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H5C3.9 1 3 1.9 3 3V21C3 22.1 3.9 23 5 23H19C20.1 23 21 22.1 21 21V9M12 13C9.8 13 8 14.8 8 17V20H16V17C16 14.8 14.2 13 12 13Z"/></svg>');
+      background-size: 16px;
+      background-repeat: no-repeat;
+      background-position: center;
+      box-shadow: 0 2px 6px rgba(139, 94, 60, 0.3);
+    }
+
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      background: white;
+      border: 1px solid #E8E8E8;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      max-width: 85%;
+      font-style: italic;
+      color: #8B5E3C;
+      animation: messageSlide 0.3s ease-out;
+    }
+
+    .typing-dots {
+      display: inline-flex;
+      margin-left: 8px;
+    }
+
+    .typing-dots span {
+      height: 8px;
+      width: 8px;
+      background: #8B5E3C;
+      border-radius: 50%;
+      display: inline-block;
+      margin: 0 1px;
+      animation: typingDots 1.4s infinite ease-in-out both;
+    }
+
+    .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0s; }
+
+    @keyframes typingDots {
+      0%, 80%, 100% { 
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+      40% { 
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .message-timestamp {
+      font-size: 0.75em;
+      color: #999;
+      margin-top: 4px;
+      text-align: right;
+      opacity: 0.8;
+    }
+
+    .user-message .message-timestamp {
+      text-align: left;
+    }
+
+    .message-content {
+      margin-bottom: 4px;
+    }
+
+    .message a {
+      color: #8B5E3C;
+      text-decoration: underline;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .message a:hover {
+      color: #634228;
+    }
+
+    .chat-input-container {
+      display: flex;
+      padding: 12px;
+      background: white;
+      border-top: 1px solid #E8E8E8;
+      border-radius: 0 0 13px 13px;
+    }
+
+    #chat-input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 2px solid #E8E8E8;
+      border-radius: 25px;
+      outline: none;
+      font-size: 0.9em;
+      transition: border-color 0.3s;
+    }
+
+    #chat-input:focus {
+      border-color: #8B5E3C;
+    }
+
+    .chat-input-container button {
+      margin-left: 10px;
+      padding: 10px 18px;
+      background: linear-gradient(135deg, #8B5E3C, #634228);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .chat-input-container button:hover {
+      background: linear-gradient(135deg, #634228, #8B5E3C);
+      transform: translateY(-1px);
+    }
+
+    /* Mobile Chatbot Responsiveness */
+    @media (max-width: 768px) {
+      #chatbot {
+        width: 300px;
+        height: 400px;
+        right: -10px;
+      }
+
+      #chatbot-container {
+        bottom: 15px;
+        right: 15px;
+      }
+
+      #chat-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #chatbot {
+        width: 280px;
+        height: 350px;
+        right: -20px;
+      }
+
+      .message {
+        font-size: 0.85em;
+        max-width: 90%;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -989,6 +1277,211 @@
       card.classList.toggle('expanded');
       el.textContent = card.classList.contains('expanded') ? 'Show Less' : 'Read More';
     }
+
+    // Chatbot Functionality
+    let chatbotOpen = false;
+    let typingIndicatorVisible = false;
+    
+    // Sound effects
+    function playNotificationSound() {
+      // Create a subtle notification sound using Web Audio API
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.value = 800; // Frequency in Hz
+      oscillator.type = 'sine';
+      
+      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+      gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.01);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.1);
+    }
+
+    function getCurrentTimestamp() {
+      const now = new Date();
+      return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    const responses = {
+      'hello': '👋 <strong>Hi there!</strong><br><br>I\'m Pritee\'s virtual assistant! I can tell you about her:<br>🚀 <em>DevOps journey & projects</em><br>💻 <em>Technical skills</em><br>📞 <em>Contact information</em><br><br>What interests you most?',
+      'hi': '🌟 <strong>Hello!</strong><br><br>Welcome! I\'m here to help you learn about Pritee\'s expertise in:<br>• DevOps & Cloud Infrastructure<br>• Database Administration<br>• Automation & Scripting<br><br>What would you like to explore? 😊',
+      'skills': '🎯 <strong>Pritee\'s Technical Arsenal:</strong><br><br><strong>DevOps Tools:</strong><br>🐳 Docker | ⚙️ Jenkins | ☁️ AWS | 🏗️ Terraform | 🤖 Ansible<br><br><strong>Databases:</strong><br>🗃️ Oracle DBA | 🗄️ MySQL | 📊 Performance Tuning<br><br><strong>Programming:</strong><br>🐍 Python | 🐧 Linux | 📜 Shell Scripting<br><br><strong>Monitoring:</strong><br>📈 Grafana | 🔍 Prometheus',
+      'projects': '🚀 <strong>Pritee\'s Amazing Projects:</strong><br><br>🌤️ <strong>Weather App CI/CD Pipeline</strong><br>Built with Node.js, automated with Jenkins & Docker<br><br>💰 <strong>3-Tier Finance Tracker</strong><br>Dockerized architecture with monitoring<br><br>⚡ <strong>Automated LAMP Stack</strong><br>Infrastructure-as-Code with Ansible<br><br>☁️ <strong>Cloud Network Deployment</strong><br>Multi-VPC architecture on AWS<br><br>👀 Check out her <a href="https://github.com/Pritee-c" target="_blank">GitHub repos</a>!',
+      'experience': '💼 <strong>Professional Experience:</strong><br><br>🏢 <strong>Database Administrator</strong><br>📍 Amdocs, Pune<br>📅 July 2022 - Present (3+ years)<br><br><strong>Key Responsibilities:</strong><br>• 🔧 Oracle DB migrations & optimization<br>• ⚡ Performance tuning (50% runtime improvements!)<br>• 🛡️ Security & access management<br>• 📋 SRE principles & automation<br>• � Documentation & SOPs',
+      'contact': '📞 <strong>Let\'s Connect!</strong><br><br>📧 <strong>Email:</strong><br><a href="mailto:priteechaugule@gmail.com">priteechaugule@gmail.com</a><br><br>� <strong>LinkedIn:</strong><br><a href="https://www.linkedin.com/in/pritee-chaugule-3a0a4a166" target="_blank">Connect with Pritee</a><br><br>💻 <strong>GitHub:</strong><br><a href="https://github.com/Pritee-c" target="_blank">View Projects</a><br><br>She\'s always excited to discuss DevOps opportunities! 🤝',
+      'aws': '☁️ <strong>AWS Expertise:</strong><br><br><strong>Core Services:</strong><br>• 🖥️ EC2 - Instance management & deployment<br>• 🌐 VPC - Network architecture design<br>• 🗃️ RDS - Database services<br>• 🚪 NAT Gateway - Secure connectivity<br><br><strong>Highlights:</strong><br>✨ Built secure multi-tier architectures<br>🏗️ Infrastructure automation with Terraform<br>🔒 Implemented security best practices',
+      'docker': '🐳 <strong>Docker Mastery:</strong><br><br><strong>Advanced Skills:</strong><br>• 🏗️ Multi-stage builds (60% size reduction!)<br>• 🎼 Docker Compose orchestration<br>• 🔍 Security scanning with Trivy<br>• 🛡️ Non-root containers & secrets management<br><br><strong>Real Projects:</strong><br>• 3-tier containerized applications<br>• Production-ready deployments<br>• Container health monitoring',
+      'jenkins': '⚙️ <strong>CI/CD Automation:</strong><br><br><strong>Jenkins Expertise:</strong><br>• 🔄 Automated build pipelines<br>• 🪝 GitHub webhook integration<br>• 🚀 EC2 deployment automation<br>• 📦 Docker image builds<br><br><strong>Workflow:</strong><br>GitHub Push → Jenkins Build → Docker Deploy → EC2<br><br>She loves making deployment seamless! ✨',
+      'automation': '🤖 <strong>Automation Passion:</strong><br><br><strong>Tools & Technologies:</strong><br>• 🎭 Ansible - LAMP stack automation<br>• 🏗️ Terraform - Infrastructure provisioning<br>• 🐍 Python - Custom automation scripts<br>• 📜 Shell Scripting - System administration<br><br><strong>Philosophy:</strong><br>"Automate the boring stuff and focus on innovation!" 💡',
+      'database': '🗃️ <strong>Database Excellence:</strong><br><br><strong>Oracle DBA Skills:</strong><br>• 📊 Performance tuning & optimization<br>• 🔄 Database migrations & upgrades<br>• 💾 Backup & recovery strategies<br>• 👥 User access & security management<br><br><strong>Achievements:</strong><br>⚡ 50% runtime improvement in PL/SQL<br>🛡️ Audit compliance & security<br>📋 SOPs & documentation',
+      'terraform': '🏗️ <strong>Infrastructure-as-Code:</strong><br><br><strong>Terraform Skills:</strong><br>• ☁️ VPC & network automation<br>• 🖥️ EC2 provisioning<br>• 🔧 Resource management<br>• 📝 State management<br><br><strong>Benefits:</strong><br>• Consistent deployments<br>• Version-controlled infrastructure<br>• Reduced manual errors<br><br>Very cool stuff indeed! �',
+      'resume': '📄 <strong>Download Resume:</strong><br><br>Click the <strong>"📄 Download Resume"</strong> button in the header to get Pritee\'s latest resume!<br><br>It includes all her:<br>• DevOps project details<br>• Technical certifications<br>• Professional experience<br>• Skills & achievements',
+      'linkedin': '💼 <strong>LinkedIn Connection:</strong><br><br>Connect with Pritee on LinkedIn:<br><a href="https://www.linkedin.com/in/pritee-chaugule-3a0a4a166" target="_blank">🔗 Pritee Chaugule Profile</a><br><br>She loves connecting with:<br>• Fellow tech enthusiasts<br>• DevOps professionals<br>• Potential collaborators<br>• Industry peers<br><br>Let\'s network! 🤝',
+      'github': '💻 <strong>GitHub Portfolio:</strong><br><br>Explore Pritee\'s code:<br><a href="https://github.com/Pritee-c" target="_blank">🔗 GitHub Profile</a><br><br><strong>Repository Highlights:</strong><br>🌤️ Weather App CI/CD<br>💰 Finance Tracker Docker<br>⚡ LAMP Ansible Automation<br>🏗️ Infrastructure Projects<br><br>Full of automation magic! ✨',
+      'about': '✨ <strong>Meet Pritee:</strong><br><br>🔍 <em>"A tech explorer who loves turning messy systems into smooth, automated workflows"</em><br><br><strong>Personality:</strong><br>• 🧠 Curious by nature<br>• 📚 Always learning<br>• 💫 Adds magic to every project<br>• 🤝 Team collaboration focused<br><br>She bridges the gap between chaos and order! 🌉',
+      'devops': '🌉 <strong>DevOps Specialty:</strong><br><br><strong>Core Practices:</strong><br>• 🔄 CI/CD pipeline design<br>• 🐳 Containerization strategies<br>• ☁️ Infrastructure automation<br>• 📊 Monitoring & observability<br>• 🚀 Cloud deployments<br><br><strong>Philosophy:</strong><br>"Bridge development and operations beautifully"<br><br>Making deployments seamless! ✨',
+      'python': '🐍 <strong>Python Power:</strong><br><br><strong>Applications:</strong><br>• 🤖 Automation scripts<br>• 🌐 Flask web applications<br>• 🗃️ Database optimization tools<br>• 📊 Data processing<br><br><strong>Combination:</strong><br>Python + DevOps = Perfect automation combo! 🎯<br><br>Code that makes life easier! �',
+      'mysql': '🗄️ <strong>MySQL Experience:</strong><br><br><strong>Skills:</strong><br>• Database design & optimization<br>• Containerized deployments<br>• Multi-database architectures<br>• Performance monitoring<br><br><strong>Projects:</strong><br>• Finance tracker backend<br>• Dockerized DB solutions<br>• Cloud database integration',
+      'monitoring': '📊 <strong>Monitoring & Observability:</strong><br><br><strong>Tools:</strong><br>• 📈 Grafana - Beautiful dashboards<br>• 🔍 Prometheus - Metrics collection<br>• ⚡ Real-time performance insights<br>• 🚨 Alert management<br><br><strong>Belief:</strong><br>"You can\'t improve what you can\'t measure"<br><br>Data-driven operations! �',
+      'default': '🤔 <strong>Interesting question!</strong><br><br>I can help you learn about:<br>• 💻 Pritee\'s technical skills<br>• 🚀 DevOps projects & experience<br>• ☁️ AWS & cloud expertise<br>• 🐳 Docker & containerization<br>• 📞 Contact information<br><br>What would you like to explore? 😊'
+    };
+
+    function toggleChatbot() {
+      const chatbot = document.getElementById('chatbot');
+      chatbotOpen = !chatbotOpen;
+      
+      if (chatbotOpen) {
+        chatbot.classList.remove('chatbot-hidden');
+        // Add welcome message if chat is empty
+        if (document.getElementById('chat-messages').children.length === 0) {
+          setTimeout(() => {
+            showTypingIndicator();
+            setTimeout(() => {
+              hideTypingIndicator();
+              addBotMessage('👋 <strong>Hi! Welcome!</strong><br><br>I\'m Pritee\'s portfolio assistant! 🤖<br><br>I can tell you about her:<br>• 🚀 DevOps expertise & projects<br>• 💻 Technical skills & experience<br>• 📞 Contact information<br><br>What would you like to explore? �');
+              playNotificationSound();
+            }, 1200);
+          }, 500);
+        }
+      } else {
+        chatbot.classList.add('chatbot-hidden');
+      }
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      
+      if (message) {
+        addUserMessage(message);
+        input.value = '';
+        
+        // Show typing indicator
+        showTypingIndicator();
+        
+        // Simulate realistic typing delay
+        setTimeout(() => {
+          hideTypingIndicator();
+          const response = getResponse(message.toLowerCase());
+          addBotMessage(response);
+          playNotificationSound();
+        }, 1500 + Math.random() * 1000); // 1.5-2.5 seconds
+      }
+    }
+
+    function showTypingIndicator() {
+      if (typingIndicatorVisible) return;
+      
+      const chatMessages = document.getElementById('chat-messages');
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'typing-indicator';
+      typingDiv.id = 'typing-indicator';
+      typingDiv.innerHTML = `
+        Pritee's assistant is typing
+        <div class="typing-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      `;
+      
+      chatMessages.appendChild(typingDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      typingIndicatorVisible = true;
+    }
+
+    function hideTypingIndicator() {
+      const typingIndicator = document.getElementById('typing-indicator');
+      if (typingIndicator) {
+        typingIndicator.remove();
+        typingIndicatorVisible = false;
+      }
+    }
+
+    function addUserMessage(message) {
+      const chatMessages = document.getElementById('chat-messages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message user-message';
+      
+      const timestamp = getCurrentTimestamp();
+      messageDiv.innerHTML = `
+        <div class="message-content">${message}</div>
+        <div class="message-timestamp">${timestamp}</div>
+      `;
+      
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function addBotMessage(message) {
+      const chatMessages = document.getElementById('chat-messages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message bot-message';
+      
+      const timestamp = getCurrentTimestamp();
+      messageDiv.innerHTML = `
+        <div class="message-content">${message}</div>
+        <div class="message-timestamp">${timestamp}</div>
+      `;
+      
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getResponse(message) {
+      // Check for multiple keywords and return the most relevant response
+      const keywords = Object.keys(responses).filter(key => key !== 'default');
+      
+      for (let keyword of keywords) {
+        if (message.includes(keyword)) {
+          return responses[keyword];
+        }
+      }
+      
+      // Check for common variations
+      if (message.includes('what') && (message.includes('do') || message.includes('does'))) {
+        return responses['about'];
+      }
+      if (message.includes('how') && message.includes('contact')) {
+        return responses['contact'];
+      }
+      if (message.includes('tell me') || message.includes('info')) {
+        return responses['about'];
+      }
+      
+      return responses['default'];
+    }
+
+    function handleEnter(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
   </script>
+
+  <!-- Chatbot -->
+  <div id="chatbot-container">
+    <div id="chat-icon" onclick="toggleChatbot()">
+      💬
+    </div>
+    <div id="chatbot" class="chatbot-hidden">
+      <div class="chat-header">
+        <span>Ask me about Pritee! 🚀</span>
+        <span id="close-chat" onclick="toggleChatbot()">&times;</span>
+      </div>
+      <div id="chat-messages"></div>
+      <div class="chat-input-container">
+        <input type="text" id="chat-input" placeholder="Type your question..." onkeypress="handleEnter(event)">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
