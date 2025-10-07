@@ -656,17 +656,132 @@
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(139, 94, 60, 0.3);
       transition: all 0.3s ease;
-      animation: chatPulse 2s ease-in-out infinite;
+      animation: chatBounce 3s ease-in-out infinite;
+      position: relative;
     }
 
-    @keyframes chatPulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+    /* Pulsing ring animation around chat icon */
+    #chat-icon::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      border: 3px solid #FFD580;
+      border-radius: 50%;
+      animation: chatRingPulse 2s ease-out infinite;
+      opacity: 0;
+    }
+
+    /* Floating notification dot */
+    #chat-icon::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 18px;
+      height: 18px;
+      background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+      border-radius: 50%;
+      border: 2px solid white;
+      animation: notificationBounce 1.5s ease-in-out infinite;
+      box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+    }
+
+    @keyframes chatBounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0) scale(1); }
+      10% { transform: translateY(-8px) scale(1.05); }
+      30% { transform: translateY(-4px) scale(1.02); }
+      60% { transform: translateY(-2px) scale(1.01); }
+    }
+
+    @keyframes chatRingPulse {
+      0% { 
+        transform: scale(0.8);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 0.3;
+      }
+      100% { 
+        transform: scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    @keyframes notificationBounce {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+      }
+      50% { 
+        transform: scale(1.2);
+        box-shadow: 0 4px 12px rgba(255, 107, 107, 0.6);
+      }
     }
 
     #chat-icon:hover {
       transform: scale(1.1);
       box-shadow: 0 6px 20px rgba(139, 94, 60, 0.4);
+      animation-play-state: paused; /* Pause bounce on hover */
+    }
+
+    /* Tooltip for chat icon */
+    .chat-tooltip {
+      position: absolute;
+      bottom: 75px;
+      right: 0;
+      background: #2c2c2c;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 14px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .chat-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -8px;
+      border: 8px solid transparent;
+      border-top-color: #2c2c2c;
+    }
+
+    #chat-icon:hover + .chat-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* Initial entrance animation */
+    @keyframes chatEnter {
+      0% {
+        opacity: 0;
+        transform: scale(0) rotate(180deg);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(90deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    /* Add entrance animation class */
+    .chat-enter {
+      animation: chatEnter 0.8s ease-out 0.5s both;
     }
 
     #chatbot {
@@ -891,6 +1006,49 @@
       transform: translateY(-1px);
     }
 
+    /* Welcome bubble */
+    .welcome-bubble {
+      position: absolute;
+      bottom: 80px;
+      right: -20px;
+      background: linear-gradient(135deg, #FFD580, #F5F5DC);
+      color: #634228;
+      padding: 12px 16px;
+      border-radius: 20px 20px 5px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px) scale(0.9);
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      z-index: 1001;
+      box-shadow: 0 4px 15px rgba(139, 94, 60, 0.2);
+      animation: welcomeFloat 2s ease-in-out infinite;
+    }
+
+    .welcome-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      right: 25px;
+      width: 0;
+      height: 0;
+      border: 8px solid transparent;
+      border-top-color: #FFD580;
+    }
+
+    .welcome-bubble.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    @keyframes welcomeFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-3px) scale(1.02); }
+    }
+
     /* Mobile Chatbot Responsiveness */
     @media (max-width: 768px) {
       #chatbot {
@@ -908,6 +1066,17 @@
         width: 55px;
         height: 55px;
         font-size: 22px;
+      }
+
+      .welcome-bubble {
+        right: -10px;
+        font-size: 12px;
+        padding: 10px 14px;
+      }
+
+      .chat-tooltip {
+        font-size: 12px;
+        padding: 8px 12px;
       }
     }
 
@@ -943,7 +1112,7 @@
         </div>
         
         <div class="name">
-          <h1 id="typing-name">Pritee Chaugule</h1>
+          <h1>Pritee Chaugule</h1>
           <div class="social-links">
             <a href="mailto:priteechaugule@gmail.com">📧 priteechaugule@gmail.com</a>
             <a href="https://www.linkedin.com/in/pritee-chaugule-3a0a4a166" target="_blank">
@@ -1243,34 +1412,29 @@
         }
         observer.observe(el);
       });
-      // Start typing animation for name
-      startTypingAnimation();
+      // Show welcome bubble after page loads
+      setTimeout(() => {
+        showWelcomeBubble();
+      }, 2000); // Show after 2 seconds
     });
 
-    // Typing Animation Function
-    function startTypingAnimation() {
-      const nameElement = document.getElementById('typing-name');
-      const text = 'Pritee Chaugule';
-      nameElement.innerHTML = '';
-      nameElement.classList.add('typing-animation');
+    // Welcome bubble functionality
+    function showWelcomeBubble() {
+      const welcomeBubble = document.getElementById('welcome-bubble');
+      welcomeBubble.classList.add('show');
       
-      let i = 0;
-      function typeWriter() {
-        if (i < text.length) {
-          nameElement.innerHTML += text.charAt(i);
-          i++;
-          setTimeout(typeWriter, 150);
-        } else {
-          // Remove cursor after typing is complete
-          setTimeout(() => {
-            nameElement.classList.remove('typing-animation');
-          }, 1000);
-        }
-      }
-      
-      // Start typing after a small delay
-      setTimeout(typeWriter, 500);
+      // Hide it after 6 seconds
+      setTimeout(() => {
+        hideWelcomeBubble();
+      }, 6000);
     }
+
+    function hideWelcomeBubble() {
+      const welcomeBubble = document.getElementById('welcome-bubble');
+      welcomeBubble.classList.remove('show');
+    }
+
+
 
     function toggleReadMore(el) {
       const card = el.closest('.project-card');
@@ -1337,6 +1501,9 @@
       chatbotOpen = !chatbotOpen;
       
       if (chatbotOpen) {
+        // Hide welcome bubble when chatbot opens
+        hideWelcomeBubble();
+        
         chatbot.classList.remove('chatbot-hidden');
         // Add welcome message if chat is empty
         if (document.getElementById('chat-messages').children.length === 0) {
@@ -1466,9 +1633,15 @@
   </script>
 
   <!-- Chatbot -->
-  <div id="chatbot-container">
+  <div id="chatbot-container" class="chat-enter">
     <div id="chat-icon" onclick="toggleChatbot()">
       💬
+    </div>
+    <div class="chat-tooltip">
+      💬 Chat with Pritee's AI Assistant!
+    </div>
+    <div class="welcome-bubble" id="welcome-bubble">
+      👋 Ask me about Pritee's DevOps skills!
     </div>
     <div id="chatbot" class="chatbot-hidden">
       <div class="chat-header">
